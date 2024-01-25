@@ -4,7 +4,7 @@
 
 - [GCC镜像站点](https://gcc.gnu.org/mirrors.html)
 - [4.8系列](https://gcc.gnu.org/gcc-4.8/)
-
+- [源码地址](http://ftp.gnu.org/gnu/gcc/)
 
 ### 关于 VLA 特性
 
@@ -12,6 +12,8 @@
 - 也不建议在程序中使用 VLA 特性，无论编译器支持与否。
 
 ### GCC 的安装
+
+本方法支持 gcc7、gcc8、gcc9 的安装。
 
 除非不得不，否则不建议自己安装 GCC 。
 

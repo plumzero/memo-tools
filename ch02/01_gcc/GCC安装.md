@@ -6,11 +6,16 @@
 #### 配置环境，生成 Make 文件
 
 ```shell
-    cd /usr/local/src/gcc8-build
-    ../gcc-8.4.0/configure --prefix=/usr/local/gcc8 --with-mpc=/usr/local/gcc8-depend/mpc --with-mpfr=/usr/local/gcc8-depend/mpfr --with-isl=/usr/local/gcc8-depend/isl --disable-multilib --enable-checking=release --enable-languages=c,c++ --disable-bootstrap --with-system-zlib
+    cd /usr/local/src/gcc-build
+    ../gcc-8.4.0/configure --prefix=/usr/local/gcc --with-mpc=/usr/local/gcc-depend/mpc --with-mpfr=/usr/local/gcc-depend/mpfr --with-isl=/usr/local/gcc-depend/isl --disable-multilib --enable-checking=release --enable-languages=c,c++ --disable-bootstrap --with-system-zlib
 ```
 这里使用的 zlib 是系统环境上的，而不是 gcc 目录下自带的包，这也是推荐的做法。
 
+注意: 如果不使用系统 gmp，则使用如下命令配置:
+```s
+    ../gcc-8.4.0/configure --prefix=/usr/local/gcc --with-mpc=/usr/local/gcc-depend/mpc --with-mpfr=/usr/local/gcc-depend/mpfr --with-isl=/usr/local/gcc-depend/isl --with-gmp=/usr/local/gcc-depend/gmp --disable-multilib --enable-checking=release --enable-languages=c,c++ --disable-bootstrap --with-system-zlib
+    make
+```
 
 #### 编译
 ```shell
@@ -24,7 +29,7 @@ make 时报找不到库错误:
 
 解决办法是动态指定库路径编译:
 ```shell
-    LD_LIBRARY_PATH=/usr/local/gcc8-depend/isl/lib make
+    LD_LIBRARY_PATH=/usr/local/gcc-depend/isl/lib make
 ```
 
 (非并行)编译时长大约 1.5 个小时。
@@ -33,12 +38,12 @@ make 时报找不到库错误:
 ```
     configure: error: source directory already configured; run "make distclean" there first
     make[1]: *** [configure-mpfr] Error 1
-    make[1]: Leaving directory `/usr/local/src/gcc8-build'
+    make[1]: Leaving directory `/usr/local/src/gcc-build'
     make: *** [all] Error 2
     
     configure: error: source directory already configured; run "make distclean" there first
     make[1]: *** [configure-isl] Error 1
-    make[1]: Leaving directory `/usr/local/src/gcc8-build'
+    make[1]: Leaving directory `/usr/local/src/gcc-build'
     make: *** [all] Error 2
 ```
 这个不妨将 `/usr/local/src/gcc-8.4.0` 中的文件清理一下(如删除 mpfr, isl 等)，或者直接还原回原来的状态，再试一下。
